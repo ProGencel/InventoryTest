@@ -35,6 +35,7 @@ public class Slot extends Button {
         }
         else
         {
+            System.out.println("asd");
             itemImage.setDrawable(new TextureRegionDrawable(item.getIcon()));
         }
     }
