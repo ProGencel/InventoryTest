@@ -1,8 +1,11 @@
 package com.myname.game;
 
+import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class Slot extends Button {
@@ -21,6 +24,27 @@ public class Slot extends Button {
         this.texture = texture;
 
         this.add(stack).fill().expand();
+
+        setListener();
+
+    }
+
+    private void setListener()
+    {
+        addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(getItem()!=null)
+                {
+                    setItem(null);
+                }
+            }
+        });
+    }
+
+    @Override
+    public boolean addCaptureListener(EventListener listener) {
+        return super.addCaptureListener(listener);
     }
 
     public Item getItem() {
@@ -39,4 +63,6 @@ public class Slot extends Button {
             itemImage.setDrawable(new TextureRegionDrawable(item.getIcon()));
         }
     }
+
+
 }

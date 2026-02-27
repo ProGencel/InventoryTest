@@ -62,7 +62,7 @@ public class InventoryScreen implements Screen {
         slotTable.add(slots[2]);
         slotTable.add(slots[3]);
         slotTable.add(slots[4]);
-
+            slots[2].setItem(item0);
 
         mainTable.add(slotTable);
         //stage.setDebugAll(true);
@@ -79,15 +79,6 @@ public class InventoryScreen implements Screen {
     public void render(float delta) {
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        if(Gdx.input.isKeyJustPressed(Input.Keys.C))
-        {
-            slots[2].setItem(item0);
-        }
-        else if(Gdx.input.isKeyJustPressed(Input.Keys.S))
-        {
-            slots[2].setItem(null);
-        }
 
         stage.act();
         stage.draw();
