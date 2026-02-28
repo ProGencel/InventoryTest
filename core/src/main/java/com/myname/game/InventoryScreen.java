@@ -86,6 +86,75 @@ public class InventoryScreen implements Screen {
 
     private void setDragAndDrop()
     {
+
+        for(Slot slot : slots)
+        {
+            dragAndDrop.addSource(new DragAndDrop.Source(slot) {
+                @Override
+                public DragAndDrop.Payload dragStart(InputEvent event, float x, float y, int pointer) {
+
+                    /*
+                    This method starts when drag starts.
+                     */
+
+                    DragAndDrop.Payload payload = new DragAndDrop.Payload();
+
+                    if(slot.getItem() == null)
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        payload.setObject(slot.getItem());
+
+                        Image image = new Image(slot.getItem().getIcon());
+                        payload.setDragActor(image);    //Sets the icon while showing on the mouse
+
+                        slot.setItem(null);
+                        return payload;
+                    }
+                }
+
+                @Override
+                public void dragStop(InputEvent event, float x, float y, int pointer, DragAndDrop.Payload payload, DragAndDrop.Target target) {
+                    /*
+                    This method starts when item lefts in the non slot place.
+                     */
+
+                    if(target == null)
+                    {
+                        slot.setItem((Item)payload.getObject());
+                    }
+                }
+            });
+
+            dragAndDrop.addTarget(new DragAndDrop.Target(slot) {
+                @Override
+                public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+
+                    /*
+                    When anything comes to the slot this method works and if this method return true then drop method works and
+                    item can be left.
+                     */
+
+                    return true;
+                }
+
+                @Override
+                public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+                    /*
+                    This method work when anything dropped to this slot.
+                     */
+
+                    if(payload.getObject() != null)
+                    {
+                        slot.setItem((Item)payload.getObject());
+                    }
+
+                }
+            });
+        }
+
         dragAndDrop.addSource(new DragAndDrop.Source(slots[0]) {
             @Override
             public DragAndDrop.Payload dragStart(InputEvent event, float x, float y, int pointer) {
