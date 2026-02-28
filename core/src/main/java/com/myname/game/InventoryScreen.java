@@ -97,7 +97,7 @@ public class InventoryScreen implements Screen {
                 public DragAndDrop.Payload dragStart(InputEvent event, float x, float y, int pointer) {
 
                     /*
-                    This method starts when drag starts.
+                    This method is called when dragging starts.
                      */
 
                     DragAndDrop.Payload payload = new DragAndDrop.Payload();
@@ -111,7 +111,7 @@ public class InventoryScreen implements Screen {
                         payload.setObject(slot.getItem());
 
                         Image image = new Image(slot.getItem().getIcon());
-                        payload.setDragActor(image);    //Sets the icon while showing on the mouse
+                        payload.setDragActor(image);    //Sets the icon at the cursor while dragging.
 
                         dragAndDrop.setDragActorPosition(image.getWidth()/2, -image.getHeight()/2);
                         image.setTouchable(Touchable.disabled);
@@ -124,7 +124,7 @@ public class InventoryScreen implements Screen {
                 @Override
                 public void dragStop(InputEvent event, float x, float y, int pointer, DragAndDrop.Payload payload, DragAndDrop.Target target) {
                     /*
-                    This method starts when item lefts in the non slot place.
+                    This method is called when an item drops outside a slot.
                      */
 
                     if(target == null)
@@ -139,8 +139,8 @@ public class InventoryScreen implements Screen {
                 public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
 
                     /*
-                    When anything comes to the slot this method works and if this method return true then drop method works and
-                    item can be left.
+                    Triggered when an item enters this slot; if it returns true, the drop method is
+                    executed and the item is placed.
                      */
 
                     return true;
@@ -149,7 +149,7 @@ public class InventoryScreen implements Screen {
                 @Override
                 public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
                     /*
-                    This method work when anything dropped to this slot.
+                    Triggers when an item is dropped in this slot.
                      */
 
                     if(payload.getObject() != null)
