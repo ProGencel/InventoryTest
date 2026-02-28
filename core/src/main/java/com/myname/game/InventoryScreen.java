@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
@@ -74,6 +75,8 @@ public class InventoryScreen implements Screen {
         stage.addActor(mainTable);
 
         dragAndDrop = new DragAndDrop();
+        dragAndDrop.setTapSquareSize(2f);
+        dragAndDrop.setDragTime(0);
 
         setDragAndDrop();
 
@@ -111,6 +114,7 @@ public class InventoryScreen implements Screen {
                         payload.setDragActor(image);    //Sets the icon while showing on the mouse
 
                         dragAndDrop.setDragActorPosition(image.getWidth()/2, -image.getHeight()/2);
+                        image.setTouchable(Touchable.disabled);
 
                         slot.setItem(null);
                         return payload;
@@ -156,50 +160,6 @@ public class InventoryScreen implements Screen {
                 }
             });
         }
-
-        dragAndDrop.addSource(new DragAndDrop.Source(slots[0]) {
-            @Override
-            public DragAndDrop.Payload dragStart(InputEvent event, float x, float y, int pointer) {
-                if (slots[0].getItem() == null) {
-                    return null;
-                }
-                else
-                {
-                    final DragAndDrop.Payload payload = new DragAndDrop.Payload();
-                    payload.setObject(slots[0].getItem());
-
-                    Image dragImage = new Image(slots[0].getItem().getIcon());
-                    payload.setDragActor(dragImage);
-
-                    slots[0].setItem(null);
-
-                    return payload;
-                }
-            }
-
-            @Override
-            public void dragStop(InputEvent event, float x, float y, int pointer, DragAndDrop.Payload payload, DragAndDrop.Target target) {
-
-                if(target == null)
-                {
-                    slots[0].setItem(item0);
-                }
-
-            }
-        });
-
-        dragAndDrop.addTarget(new DragAndDrop.Target(slots[1]) {
-            @Override
-            public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-                return true;
-            }
-
-            @Override
-            public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
-                slots[1].setItem((Item) payload.getObject());
-            }
-        });
-
     }
 
     @Override
