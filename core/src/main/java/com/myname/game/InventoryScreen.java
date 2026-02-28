@@ -110,6 +110,8 @@ public class InventoryScreen implements Screen {
                         Image image = new Image(slot.getItem().getIcon());
                         payload.setDragActor(image);    //Sets the icon while showing on the mouse
 
+                        dragAndDrop.setDragActorPosition(image.getWidth()/2, -image.getHeight()/2);
+
                         slot.setItem(null);
                         return payload;
                     }
